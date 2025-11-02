@@ -24,6 +24,9 @@ jobs:
 
     - name: Build with Gradle
       run: ./gradlew build
+      
+    - name: Confirm JAR exists
+      run: ls -R build/libs
     
     - name: Build and Push Docker Image
       if: github.event_name == 'push'
@@ -33,5 +36,6 @@ jobs:
         registry: docker.io
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-
+        context: .
+        dockerfile: ./Dockerfile
         
