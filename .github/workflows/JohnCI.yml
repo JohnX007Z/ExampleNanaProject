@@ -28,6 +28,21 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
 
+    - name: Check Docker secrets exist
+      run: |
+        if [ -z "${{ secrets.DOCKER_USERNAME }}" ]; then
+          echo "❌ DOCKER_USERNAME is missing"
+          exit 1
+        fi
+        echo "✅ Docker secrets are available"
+    - name: Check Docker secrets exist
+      run: |
+        if [ -z "${{ secrets.DOCKER_PASSWORD }}" ]; then
+          echo "❌ DOCKER_PASSWORD is missing"
+          exit 1
+        fi
+        echo "✅ Docker secrets are available"
+    
     - name: Build and Push Docker Image
       if: github.event_name == 'push'
       uses: mr-smithers-excellent/docker-build-push@v4
